@@ -2,7 +2,7 @@ package lesson2_demo_lt1;
 
 import java.util.ArrayList;
 
-public class NguoiService {
+public class NguoiService implements NguoiServiceInterface {
     private ArrayList<Nguoi> ds;
     
     public NguoiService()

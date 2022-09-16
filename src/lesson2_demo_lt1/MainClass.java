@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class MainClass {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        NguoiService service = new NguoiService();
+        NguoiServiceInterface service = new NguoiService();
         
         while (true)
         {
