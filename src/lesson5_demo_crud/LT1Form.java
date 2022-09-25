@@ -1,5 +1,6 @@
 package lesson5_demo_crud;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import lesson2_demo_lt1.Nguoi;
 import lesson2_demo_lt1.NguoiService;
@@ -295,17 +296,29 @@ public class LT1Form extends javax.swing.JFrame {
         if (row == -1) {
             return ;
         }
-        
+
+        int xacNhan = JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa ko?");
+        if (xacNhan != JOptionPane.YES_OPTION) {
+            return ;
+        }
+
         this.nguoiService.delete(row);
         this.loadTable();
         this.clearForm();
+        JOptionPane.showMessageDialog(this, "Xóa thành công");
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         SinhVien sv = this.getFormData();
+        if (sv == null) {
+            return ;
+        }
+
         this.nguoiService.insert(sv);
         this.loadTable();
         this.clearForm();
+
+        JOptionPane.showMessageDialog(this, "Thêm thành công");
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
@@ -315,9 +328,13 @@ public class LT1Form extends javax.swing.JFrame {
         }
 
         SinhVien sv = this.getFormData();
+        if (sv == null) {
+            return ;
+        }
         this.nguoiService.update(row, sv);
         this.loadTable();
         this.clearForm();
+        JOptionPane.showMessageDialog(this, "Sửa thành công");
     }//GEN-LAST:event_btnSuaActionPerformed
     
     private SinhVien getFormData()
@@ -333,6 +350,7 @@ public class LT1Form extends javax.swing.JFrame {
             diaChi.trim().length() == 0 ||
             maSv.trim().length() == 0
         ) {
+            JOptionPane.showMessageDialog(this, "Không được để trống");
             return null;
         }
         
