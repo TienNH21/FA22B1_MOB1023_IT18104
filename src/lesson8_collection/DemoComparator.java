@@ -8,10 +8,11 @@ import lesson5_demo_crud.SinhVien;
 public class DemoComparator {
     public static void main(String[] args) {
         ArrayList<SinhVien> list = new ArrayList<>();
-        
-        list.add(new SinhVien("PH1", "PTPM", "A", 1, "HN"));
-        list.add(new SinhVien("PH3", "TKTW", "B", 0, "HN"));
-        list.add(new SinhVien("PH2", "LTMT", "C", 1, "HN"));
+        list.add(new SinhVien("PH3", "TKTW", "H", 0, "DN"));
+        list.add(new SinhVien("PH5", "PTPM", "A", 1, "DN"));
+        list.add(new SinhVien("PH4", "LTMT", "D", 0, "DN"));
+        list.add(new SinhVien("PH1", "PTPM", "B", 1, "DN"));
+        list.add(new SinhVien("PH2", "TKTW", "E", 1, "DN"));
         
         Comparator<SinhVien> c = new Comparator<SinhVien>() {
             @Override
@@ -19,11 +20,10 @@ public class DemoComparator {
                 return sv1.getMaSv().compareTo(sv2.getMaSv());
             }
         };
-        
+
         Collections.sort(list, c);
-        
         for (SinhVien sv : list) {
-            System.out.println(sv.getMaSv());
+           System.out.println(sv.getMaSv());
         }
     }
 }
