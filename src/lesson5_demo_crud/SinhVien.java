@@ -1,8 +1,9 @@
 package lesson5_demo_crud;
 
+import java.io.Serializable;
 import lesson2_demo_lt1.Nguoi;
 
-public class SinhVien extends Nguoi {
+public class SinhVien extends Nguoi implements Serializable {
     private String maSv;
     private String cNganh;
 

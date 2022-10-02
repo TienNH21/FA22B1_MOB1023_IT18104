@@ -1,5 +1,14 @@
 package lesson5_demo_crud;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import lesson2_demo_lt1.Nguoi;
@@ -7,6 +16,7 @@ import lesson2_demo_lt1.NguoiService;
 
 public class LT1Form extends javax.swing.JFrame {
     private NguoiService nguoiService;
+    private String filename = "lt1.txt";
 
     public LT1Form() {
         initComponents();
@@ -59,6 +69,8 @@ public class LT1Form extends javax.swing.JFrame {
         btnXoa = new javax.swing.JButton();
         btnXoaForm = new javax.swing.JButton();
         btnThoat = new javax.swing.JButton();
+        btnDoc = new javax.swing.JButton();
+        btnGhi = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSv = new javax.swing.JTable();
@@ -120,6 +132,20 @@ public class LT1Form extends javax.swing.JFrame {
             }
         });
 
+        btnDoc.setText("Đọc");
+        btnDoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDocActionPerformed(evt);
+            }
+        });
+
+        btnGhi.setText("Ghi");
+        btnGhi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGhiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -160,7 +186,11 @@ public class LT1Form extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnXoaForm)
                         .addGap(18, 18, 18)
-                        .addComponent(btnThoat)))
+                        .addComponent(btnThoat))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnDoc)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnGhi)))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -190,7 +220,11 @@ public class LT1Form extends javax.swing.JFrame {
                     .addComponent(btnXoa)
                     .addComponent(btnXoaForm)
                     .addComponent(btnThoat))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDoc)
+                    .addComponent(btnGhi))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -336,6 +370,43 @@ public class LT1Form extends javax.swing.JFrame {
         this.clearForm();
         JOptionPane.showMessageDialog(this, "Sửa thành công");
     }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnGhiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGhiActionPerformed
+        ArrayList<Nguoi> ds = this.nguoiService.getDs();
+        FileOutputStream fos = null;
+        ObjectOutputStream oos = null;
+        try {
+            fos = new FileOutputStream(this.filename);
+            oos = new ObjectOutputStream(fos);
+            oos.writeObject(ds);
+            oos.close();
+            
+            JOptionPane.showMessageDialog(this, "Ghi file thành công");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnGhiActionPerformed
+
+    private void btnDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocActionPerformed
+        
+        try {
+            FileInputStream fis = new FileInputStream(this.filename);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            
+            ArrayList<Nguoi> ds = (ArrayList<Nguoi>) ois.readObject();
+            this.nguoiService.setDs(ds);
+            
+            ois.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnDocActionPerformed
     
     private SinhVien getFormData()
     {
@@ -400,6 +471,8 @@ public class LT1Form extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDoc;
+    private javax.swing.JButton btnGhi;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnThoat;
